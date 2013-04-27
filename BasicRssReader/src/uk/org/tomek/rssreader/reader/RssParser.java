@@ -9,11 +9,9 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import uk.org.tomek.rssreader.items.FeedItem;
 import uk.org.tomek.rssreader.items.FeedItemImpl;
-import android.util.Log;
 
 public final class RssParser extends DefaultHandler {
 
-	private final String TAG = "RssParser";
 	private List<FeedItem> mItemsList;
 	private FeedItemImpl.Builder mCurrentItemBuilder;
 	private StringBuilder mStringBuilderTemp;
@@ -22,7 +20,6 @@ public final class RssParser extends DefaultHandler {
 	private RssParser() {
 		mItemsList = new ArrayList<FeedItem>();
 		mStringBuilderTemp = new StringBuilder();
-		Log.d(TAG, "RssParser ceated");
 	}
 	
 	public static RssParser newInstance() {

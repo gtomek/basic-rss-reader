@@ -35,8 +35,11 @@ public class DownloadFeedsTask extends AsyncTask<String, Boolean, List<FeedItem>
 	
 	@Override
 	protected void onProgressUpdate(Boolean... values) {
-		// TODO Auto-generated method stub
-		super.onProgressUpdate(values);
+		if (values[0]) {
+			Log.d(TAG , "Fetching and parsing feeds finished.");
+		} else {
+			Log.e(TAG , "Fetching and parsing feeds has failed.");
+		}
 	}
 	
 	@Override
