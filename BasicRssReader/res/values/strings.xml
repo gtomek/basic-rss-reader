@@ -3,6 +3,9 @@
 
     <string name="app_name">BasicRssReader</string>
     <string name="action_settings">Settings</string>
-    <string name="read_button">Read</string>
+    <string name="try_again">Try again</string>
+    <string name="please_wait">Please wait&#8230;</string>
+    <string name="fetch_failure">Fetching RSS feeds has failed!</string>
+    <string name="fetch_success">Fetching RSS feeds has succeeded!</string>
 
 </resources>
