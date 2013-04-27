@@ -8,16 +8,18 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
 
 import uk.org.tomek.rssreader.items.FeedItem;
+import android.util.Log;
 
 public final class RssReaderImpl implements RssReader {
 
 	private final String mFeedUrl;
+	private final String TAG = "RssReaderImpl";
 
 	public RssReaderImpl(String feedUrl) {
 		mFeedUrl = feedUrl;
+		Log.d(TAG, String.format("RssReaderImpl created with URL:%s", feedUrl));
 	}
 	
 	public static RssReader newInstance(String feedUrl) {
@@ -28,22 +30,23 @@ public final class RssReaderImpl implements RssReader {
 	public List<FeedItem> getFeeds() {
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		SAXParser saxParser;
-		DefaultHandler parserHandler = RssParser.newInstance();
+		RssParser parserHandler = RssParser.newInstance();
 		try {
 			saxParser = factory.newSAXParser();
+			Log.d(TAG, "Calling parse() in RssReaderImplementation");
 			saxParser.parse(mFeedUrl, parserHandler);
 		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
+			Log.e(TAG, "ParserConfigurationException");
 			e.printStackTrace();
 		} catch (SAXException e) {
-			// TODO Auto-generated catch block
+			Log.e(TAG, "SAXException");
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			Log.e(TAG, "IOException");
 			e.printStackTrace();
 		}
 	
-		return null;
+		return parserHandler.getItems();
 	}
 
 	

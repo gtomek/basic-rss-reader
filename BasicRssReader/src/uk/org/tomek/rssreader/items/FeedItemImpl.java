@@ -81,35 +81,35 @@ public class FeedItemImpl implements FeedItem {
 		private Builder() {
 		}
 
-		public void setmTitle(String title) {
+		public void setTitle(String title) {
 			this.mTitle = title;
 		}
 
-		public void setmDescription(String description) {
+		public void setDescription(String description) {
 			this.mDescription = description;
 		}
 
-		public void setmTrackName(String trackName) {
+		public void setTrackName(String trackName) {
 			this.mTrackName = trackName;
 		}
 
-		public void setmTrackArtist(String trackArtist) {
+		public void setTrackArtist(String trackArtist) {
 			this.mTrackArtist = trackArtist;
 		}
 
-		public void setmTrackId(String trackId) {
+		public void setTrackId(String trackId) {
 			this.mTrackId = trackId;
 		}
 
-		public void setmLink(String link) {
+		public void setLink(String link) {
 			this.mLink = link;
 		}
 
-		public void setmGuid(String guid) {
+		public void setGuid(String guid) {
 			this.mGuid = guid;
 		}
 
-		public void setmPubDate(String pubDate) {
+		public void setPubDate(String pubDate) {
 			this.mPubDate = pubDate;
 		}
 
