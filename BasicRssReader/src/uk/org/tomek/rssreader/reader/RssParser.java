@@ -30,14 +30,12 @@ public final class RssParser extends DefaultHandler {
 	}
 
 	public List<FeedItem> getItems() {
-		Log.d(TAG, "Called getItems()");
 		return mItemsList;
 	}
 	
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes)
 			throws SAXException {
-		Log.d(TAG, String.format("Element:%s start detected, localName:%s", qName, localName));
 		if ("item".equalsIgnoreCase(qName)) {
 			mCurrentItemBuilder = FeedItemImpl.createEmptyBuilder();
 			mIsInItemTag = true;
@@ -47,7 +45,6 @@ public final class RssParser extends DefaultHandler {
 	
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
-		Log.d(TAG, String.format("Element:%s end detected, localName:%s", qName, localName));
 		if ("item".equalsIgnoreCase(qName)) {
 			FeedItemImpl currentItem = mCurrentItemBuilder.build();
 			mItemsList.add(currentItem);
@@ -56,27 +53,21 @@ public final class RssParser extends DefaultHandler {
 		}
 		if (mIsInItemTag) {
 			if (qName.equalsIgnoreCase("title")) {
-				Log.d(TAG, String.format("detected title:%s", mStringBuilderTemp.toString()));
 				mCurrentItemBuilder.setTitle(extractCleanString());
 			}
 			if (qName.equalsIgnoreCase("description")) {
-				Log.d(TAG, String.format("detected description:%s", mStringBuilderTemp.toString()));
 				mCurrentItemBuilder.setDescription(extractCleanString());
 			}
 			if (qName.equalsIgnoreCase("trackName")) {
-				Log.d(TAG, String.format("detected track name:%s", mStringBuilderTemp.toString()));
 				mCurrentItemBuilder.setTrackName(extractCleanString());
 			}
 			if (qName.equalsIgnoreCase("trackArtist")) {
-				Log.d(TAG, String.format("detected artist:%s", mStringBuilderTemp.toString()));
 				mCurrentItemBuilder.setTrackArtist(extractCleanString());
 			}
 			if (qName.equalsIgnoreCase("trackId")) {
-				Log.d(TAG, String.format("detected trackId:%s", mStringBuilderTemp.toString()));
 				mCurrentItemBuilder.setTrackId(extractCleanString());
 			}
 			if (qName.equalsIgnoreCase("link")) {
-				Log.d(TAG, String.format("detected link:%s", mStringBuilderTemp.toString()));
 				mCurrentItemBuilder.setLink(extractCleanString());
 			}
 			mStringBuilderTemp.setLength(0);
@@ -95,6 +86,5 @@ public final class RssParser extends DefaultHandler {
 	@Override
 	public void characters(char[] ch, int start, int length) throws SAXException {
 		mStringBuilderTemp.append(ch, start, length);
-//		Log.d(TAG, String.format("String builder value:%s", mStringBuilderTemp.toString()));
 	}
 }
