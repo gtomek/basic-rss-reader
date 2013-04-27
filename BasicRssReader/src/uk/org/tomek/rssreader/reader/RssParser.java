@@ -17,9 +17,11 @@ public final class RssParser extends DefaultHandler {
 	private List<FeedItem> mItemsList;
 	private FeedItemImpl.Builder mCurrentItemBuilder;
 	private StringBuilder mStringBuilderTemp;
+	private boolean mIsInItemTag = false;
 	
 	private RssParser() {
 		mItemsList = new ArrayList<FeedItem>();
+		mStringBuilderTemp = new StringBuilder();
 		Log.d(TAG, "RssParser ceated");
 	}
 	
@@ -35,29 +37,55 @@ public final class RssParser extends DefaultHandler {
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes)
 			throws SAXException {
-		Log.d(TAG, "Called startElement()");
-		mStringBuilderTemp = new StringBuilder();
+		Log.d(TAG, String.format("Element:%s start detected, localName:%s", qName, localName));
 		if ("item".equalsIgnoreCase(qName)) {
 			mCurrentItemBuilder = FeedItemImpl.createEmptyBuilder();
+			mIsInItemTag = true;
+			mStringBuilderTemp.setLength(0);
 		}
 	}
 	
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
-		Log.d(TAG, "Called endElement()");
-		if(localName.equalsIgnoreCase("title")) {
-			Log.d(TAG, "detected title");
-			mCurrentItemBuilder.setTitle(mStringBuilderTemp.toString());
-		}
+		Log.d(TAG, String.format("Element:%s end detected, localName:%s", qName, localName));
 		if ("item".equalsIgnoreCase(qName)) {
 			FeedItemImpl currentItem = mCurrentItemBuilder.build();
 			mItemsList.add(currentItem);
 			mCurrentItemBuilder = null;
+			mIsInItemTag = false;
+		}
+		if (mIsInItemTag) {
+			if (qName.equalsIgnoreCase("title")) {
+				Log.d(TAG, String.format("detected title:%s", mStringBuilderTemp.toString()));
+				mCurrentItemBuilder.setTitle(mStringBuilderTemp.toString());
+			}
+			if (qName.equalsIgnoreCase("description")) {
+				Log.d(TAG, String.format("detected description:%s", mStringBuilderTemp.toString()));
+				mCurrentItemBuilder.setDescription(mStringBuilderTemp.toString());
+			}
+			if (qName.equalsIgnoreCase("trackName")) {
+				Log.d(TAG, String.format("detected track name:%s", mStringBuilderTemp.toString()));
+				mCurrentItemBuilder.setTrackName(mStringBuilderTemp.toString());
+			}
+			if (qName.equalsIgnoreCase("trackArtist")) {
+				Log.d(TAG, String.format("detected artist:%s", mStringBuilderTemp.toString()));
+				mCurrentItemBuilder.setTrackArtist(mStringBuilderTemp.toString());
+			}
+			if (qName.equalsIgnoreCase("trackId")) {
+				Log.d(TAG, String.format("detected trackId:%s", mStringBuilderTemp.toString()));
+				mCurrentItemBuilder.setTrackId(mStringBuilderTemp.toString());
+			}
+			if (qName.equalsIgnoreCase("link")) {
+				Log.d(TAG, String.format("detected link:%s", mStringBuilderTemp.toString()));
+				mCurrentItemBuilder.setLink(mStringBuilderTemp.toString());
+			}
+			mStringBuilderTemp.setLength(0);
 		}
 	}
 	
 	@Override
 	public void characters(char[] ch, int start, int length) throws SAXException {
 		mStringBuilderTemp.append(ch, start, length);
+//		Log.d(TAG, String.format("String builder value:%s", mStringBuilderTemp.toString()));
 	}
 }

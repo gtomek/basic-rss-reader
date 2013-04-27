@@ -12,6 +12,12 @@ import org.xml.sax.SAXException;
 import uk.org.tomek.rssreader.items.FeedItem;
 import android.util.Log;
 
+/**
+ * Implementation of {@link RssReader}.
+ * 
+ * @author Tomek Giszczak <tgiszczak@gmail.com>
+ *
+ */
 public final class RssReaderImpl implements RssReader {
 
 	private final String mFeedUrl;
