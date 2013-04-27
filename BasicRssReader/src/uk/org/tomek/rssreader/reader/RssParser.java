@@ -57,30 +57,39 @@ public final class RssParser extends DefaultHandler {
 		if (mIsInItemTag) {
 			if (qName.equalsIgnoreCase("title")) {
 				Log.d(TAG, String.format("detected title:%s", mStringBuilderTemp.toString()));
-				mCurrentItemBuilder.setTitle(mStringBuilderTemp.toString());
+				mCurrentItemBuilder.setTitle(extractCleanString());
 			}
 			if (qName.equalsIgnoreCase("description")) {
 				Log.d(TAG, String.format("detected description:%s", mStringBuilderTemp.toString()));
-				mCurrentItemBuilder.setDescription(mStringBuilderTemp.toString());
+				mCurrentItemBuilder.setDescription(extractCleanString());
 			}
 			if (qName.equalsIgnoreCase("trackName")) {
 				Log.d(TAG, String.format("detected track name:%s", mStringBuilderTemp.toString()));
-				mCurrentItemBuilder.setTrackName(mStringBuilderTemp.toString());
+				mCurrentItemBuilder.setTrackName(extractCleanString());
 			}
 			if (qName.equalsIgnoreCase("trackArtist")) {
 				Log.d(TAG, String.format("detected artist:%s", mStringBuilderTemp.toString()));
-				mCurrentItemBuilder.setTrackArtist(mStringBuilderTemp.toString());
+				mCurrentItemBuilder.setTrackArtist(extractCleanString());
 			}
 			if (qName.equalsIgnoreCase("trackId")) {
 				Log.d(TAG, String.format("detected trackId:%s", mStringBuilderTemp.toString()));
-				mCurrentItemBuilder.setTrackId(mStringBuilderTemp.toString());
+				mCurrentItemBuilder.setTrackId(extractCleanString());
 			}
 			if (qName.equalsIgnoreCase("link")) {
 				Log.d(TAG, String.format("detected link:%s", mStringBuilderTemp.toString()));
-				mCurrentItemBuilder.setLink(mStringBuilderTemp.toString());
+				mCurrentItemBuilder.setLink(extractCleanString());
 			}
 			mStringBuilderTemp.setLength(0);
 		}
+	}
+
+	/**
+	 * Helper method removing training spaces and new line characters from the parsed String.
+	 * 
+	 * @return
+	 */
+	private String extractCleanString() {
+		return mStringBuilderTemp.toString().replaceAll("(\\r|\\n)", "").trim();
 	}
 	
 	@Override

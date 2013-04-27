@@ -63,6 +63,20 @@ public class FeedItemImpl implements FeedItem {
 		return mPubDate;
 	}
 	
+	@Override
+	public String toString() {
+		StringBuilder result = new StringBuilder();
+		result.append("mTitle=").append(mTitle).append(",")
+		.append("mDescription=").append(mDescription).append(",")
+		.append("mTrackName=").append(mTrackName).append(",")
+		.append("mTrackArtist=").append(mTrackArtist).append(",")
+		.append("mTrackId=").append(mTrackId).append(",")
+		.append("mLink=").append(mLink).append(",")
+		.append("mGuid=").append(mGuid).append(",")
+		.append("mPubDate=").append(mPubDate).append(",");
+		return result.toString();
+	};
+	
 	public static Builder createEmptyBuilder() {
 		return new Builder();
 	}

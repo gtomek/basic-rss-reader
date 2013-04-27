@@ -10,5 +10,5 @@ public interface FeedItem {
 	public String getLink();
 	public String getGuid();
 	public String getPubDate();
-	
+	public String toString();
 }
