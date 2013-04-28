@@ -1,7 +1,8 @@
 package uk.org.tomek.rssreader.items;
 
-public class FeedItemImpl implements FeedItem {
 
+public class FeedItemImpl implements FeedItem{
+	
 	private final String mTitle;
 	private final String mDescription;
 	private final String mTrackName;

@@ -22,8 +22,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/progress_bar"
         android:layout_centerHorizontal="true"
-        android:gravity="center_vertical"
         android:layout_marginTop="40dp"
+        android:gravity="center_horizontal"
         android:text="@string/please_wait"
         android:textAppearance="?android:attr/textAppearanceLarge" />
     

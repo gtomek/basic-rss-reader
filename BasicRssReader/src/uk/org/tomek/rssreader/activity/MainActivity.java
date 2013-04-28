@@ -7,6 +7,7 @@ import uk.org.tomek.rssreader.items.FeedItem;
 import uk.org.tomek.rssreader.reader.RssReader;
 import uk.org.tomek.rssreader.reader.RssReaderImpl;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +25,7 @@ import android.widget.TextView;
  */
 public class MainActivity extends Activity {
 	
+	public static final String TAG_ITEMS_ARRAY = "TAG_ITEMS_ARRAY";
 	// TODO: URL should be configurable somewhere in the app
 	// for the moment the URL of the feed is fixed
 	private final String RSS_FEED_URL = 
@@ -52,7 +54,7 @@ public class MainActivity extends Activity {
 		
 		new DownloadFeedsTask().execute(RSS_FEED_URL);
 	}
-
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -60,8 +62,7 @@ public class MainActivity extends Activity {
 		
 		return true;
 	}
-	
-	
+
 	/**
 	 * {@link AsyncTask} responsible for fetching and parsing of RSS feeds.
 	 * 
@@ -103,8 +104,10 @@ public class MainActivity extends Activity {
 		
 		@Override
 		protected void onPostExecute(List<FeedItem> result) {
-			// TODO Display the content..
-			super.onPostExecute(result);
+			// Display the content..
+			Intent feedPresentation = new Intent(MainActivity.this, FeedActivity.class);
+//			feedPresentation.putExtra(TAG_ITEMS_ARRAY, result);
+			startActivity(feedPresentation);
 		}
 	}
 
