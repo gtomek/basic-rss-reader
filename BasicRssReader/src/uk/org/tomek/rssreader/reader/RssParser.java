@@ -8,12 +8,12 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import uk.org.tomek.rssreader.items.FeedItem;
-import uk.org.tomek.rssreader.items.FeedItemImpl;
+import uk.org.tomek.rssreader.items.FeedItem;
 
 public final class RssParser extends DefaultHandler {
 
 	private List<FeedItem> mItemsList;
-	private FeedItemImpl.Builder mCurrentItemBuilder;
+	private FeedItem.Builder mCurrentItemBuilder;
 	private StringBuilder mStringBuilderTemp;
 	private boolean mIsInItemTag = false;
 	
@@ -34,7 +34,7 @@ public final class RssParser extends DefaultHandler {
 	public void startElement(String uri, String localName, String qName, Attributes attributes)
 			throws SAXException {
 		if ("item".equalsIgnoreCase(qName)) {
-			mCurrentItemBuilder = FeedItemImpl.createEmptyBuilder();
+			mCurrentItemBuilder = FeedItem.createEmptyBuilder();
 			mIsInItemTag = true;
 			mStringBuilderTemp.setLength(0);
 		}
@@ -43,7 +43,7 @@ public final class RssParser extends DefaultHandler {
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 		if ("item".equalsIgnoreCase(qName)) {
-			FeedItemImpl currentItem = mCurrentItemBuilder.build();
+			FeedItem currentItem = mCurrentItemBuilder.build();
 			mItemsList.add(currentItem);
 			mCurrentItemBuilder = null;
 			mIsInItemTag = false;
