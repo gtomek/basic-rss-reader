@@ -1,3 +1,18 @@
+/**
+ *   Copyright 2013 Tomasz Giszczak <tgiszczak@gmail.com>
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+ */
 package uk.org.tomek.rssreader.activity;
 
 import java.util.ArrayList;
@@ -10,7 +25,6 @@ import uk.org.tomek.rssreader.config.Configuration;
 import uk.org.tomek.rssreader.items.FeedItem;
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.Menu;
@@ -28,41 +42,39 @@ import android.widget.SimpleAdapter;
  */
 public class FeedActivity extends Activity {
 
-	 // This is the Adapter being used to display the list's data
-    SimpleCursorAdapter mAdapter;
-    
-    static final String TAG = "FeedActivity";
-	
+	// This is the Adapter being used to display the list's data
+	SimpleCursorAdapter mAdapter;
+
+	static final String TAG = "FeedActivity";
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.feed_list);
 
-		final List<FeedItem> feedsList = getIntent().getParcelableArrayListExtra(Configuration.TAG_ITEMS_ARRAY);
+		final List<FeedItem> feedsList = getIntent().getParcelableArrayListExtra(
+				Configuration.TAG_ITEMS_ARRAY);
 
-		// create ArrayList of Maps for SimpleAdapter 
+		// create ArrayList of Maps for SimpleAdapter
 		List<Map<String, String>> rssItemsList = getArrayListOfItemMaps(feedsList);
-		
+
 		// Create ListView
 		ListView itemsListView = (ListView) findViewById(R.id.feed_list);
 
 		// TextView elements in feed_item
-		int[] toViews = { R.id.artist, R.id.title }; 
+		int[] toViews = { R.id.artist, R.id.title };
 
 		SimpleAdapter adapter = new SimpleAdapter(this, rssItemsList, R.layout.feed_item,
 				new String[] { "artist", "title" }, toViews);
-		
+
 		// Set list adapter for the ListView
 		itemsListView.setAdapter(adapter);
-		
+
 		// set clicks listener
 		itemsListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View view, int pos, long id) {
-//				Intent intent = new Intent(Intent.ACTION_VIEW);
-//				intent.setData(Uri.parse(feedsList.get(pos).getLink()));
-			
 				Intent intent = new Intent(FeedActivity.this, FeedWebActivity.class);
 				intent.putExtra(Configuration.LINK_TAG, feedsList.get(pos).getLink());
 				startActivity(intent);
@@ -86,12 +98,12 @@ public class FeedActivity extends Activity {
 		}
 		return rssItemsList;
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
-		
+
 		return true;
 	}
 
