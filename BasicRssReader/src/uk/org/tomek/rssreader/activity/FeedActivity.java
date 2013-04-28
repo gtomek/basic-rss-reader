@@ -15,6 +15,12 @@ import android.view.Menu;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+/**
+ * Activity that displays the list of fetched items.
+ * 
+ * @author Tomasz Giszczak <tgiszczak@gmail.com>
+ * 
+ */
 public class FeedActivity extends Activity {
 
 	 // This is the Adapter being used to display the list's data
@@ -35,7 +41,8 @@ public class FeedActivity extends Activity {
 		// Create ListView
 		ListView itemsListView = (ListView) findViewById(R.id.feed_list);
 
-		int[] toViews = { R.id.artist, R.id.title }; // The TextView elements in feed_item
+		// TextView elements in feed_item
+		int[] toViews = { R.id.artist, R.id.title }; 
 
 		SimpleAdapter adapter = new SimpleAdapter(this, rssItemsList, R.layout.feed_item,
 				new String[] { "artist", "title" }, toViews);
@@ -46,6 +53,7 @@ public class FeedActivity extends Activity {
 
 	/**
 	 * Creates List of Maps for SimpleAdapter.
+	 * 
 	 * @param feedsList
 	 * @return List of items Maps
 	 */
