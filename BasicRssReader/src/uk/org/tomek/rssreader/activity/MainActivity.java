@@ -3,6 +3,7 @@ package uk.org.tomek.rssreader.activity;
 import java.util.ArrayList;
 
 import uk.org.tomek.rssreader.R;
+import uk.org.tomek.rssreader.config.Configuration;
 import uk.org.tomek.rssreader.items.FeedItem;
 import uk.org.tomek.rssreader.reader.RssReader;
 import uk.org.tomek.rssreader.reader.RssReaderImpl;
@@ -25,11 +26,6 @@ import android.widget.TextView;
  */
 public class MainActivity extends Activity {
 	
-	public static final String TAG_ITEMS_ARRAY = "TAG_ITEMS_ARRAY";
-	// TODO: URL should be configurable somewhere in the app
-	// for the moment the URL of the feed is fixed
-	private final String RSS_FEED_URL = 
-			"http://www.shazam.com/music/web/taglistrss?mode=xml&userName=shazam";
 	private ProgressBar mProgressBar;
 	private TextView mProgressBarDescription;
 	private Button mRetryButton;
@@ -47,12 +43,12 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				new DownloadFeedsTask().execute(RSS_FEED_URL);
+				new DownloadFeedsTask().execute(Configuration.RSS_FEED_URL);
 			}
 			
 		});
 		
-		new DownloadFeedsTask().execute(RSS_FEED_URL);
+		new DownloadFeedsTask().execute(Configuration.RSS_FEED_URL);
 	}
 	
 	@Override
@@ -106,7 +102,7 @@ public class MainActivity extends Activity {
 		protected void onPostExecute(ArrayList<FeedItem> result) {
 			// Display the content..
 			Intent feedPresentation = new Intent(MainActivity.this, FeedActivity.class);
-//			feedPresentation.putExtra(TAG_ITEMS_ARRAY, result);
+			feedPresentation.putParcelableArrayListExtra(Configuration.TAG_ITEMS_ARRAY, result);
 			startActivity(feedPresentation);
 		}
 	}

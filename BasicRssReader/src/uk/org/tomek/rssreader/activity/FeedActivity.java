@@ -1,16 +1,19 @@
 package uk.org.tomek.rssreader.activity;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import uk.org.tomek.rssreader.R;
+import uk.org.tomek.rssreader.config.Configuration;
 import uk.org.tomek.rssreader.items.FeedItem;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.Menu;
-import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.ProgressBar;
+import android.widget.SimpleAdapter;
 
 public class FeedActivity extends Activity {
 
@@ -24,14 +27,37 @@ public class FeedActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.feed_list);
 
-		// Create ListView
-		ListView itemsList = (ListView) findViewById(R.id.feed_list);
-		// Create a list adapter
-//		ArrayAdapter<FeedItem> adapter = new ArrayAdapter<FeedItem>(this,
-//				android.R.layout.list_content, rssReader.getItems());
-		// Set list adapter for the ListView
-//		itemsList.setAdapter(adapter);
+		List<FeedItem> feedsList = getIntent().getParcelableArrayListExtra(Configuration.TAG_ITEMS_ARRAY);
+
+		// create ArrayList of Maps for SimpleAdapter 
+		List<Map<String, String>> rssItemsList = getArrayListOfItemMaps(feedsList);
 		
+		// Create ListView
+		ListView itemsListView = (ListView) findViewById(R.id.feed_list);
+
+		int[] toViews = { R.id.artist, R.id.title }; // The TextView elements in feed_item
+
+		SimpleAdapter adapter = new SimpleAdapter(this, rssItemsList, R.layout.feed_item,
+				new String[] { "artist", "title" }, toViews);
+		
+		// Set list adapter for the ListView
+		itemsListView.setAdapter(adapter);
+	}
+
+	/**
+	 * Creates List of Maps for SimpleAdapter.
+	 * @param feedsList
+	 * @return List of items Maps
+	 */
+	private List<Map<String, String>> getArrayListOfItemMaps(List<FeedItem> feedsList) {
+		List<Map<String, String>> rssItemsList = new ArrayList<Map<String, String>>();
+		for (FeedItem item : feedsList) {
+			Map<String, String> itemsMap = new HashMap<String, String>();
+			itemsMap.put("artist", item.getTrackArtist());
+			itemsMap.put("title", item.getTitle());
+			rssItemsList.add(itemsMap);
+		}
+		return rssItemsList;
 	}
 	
 	@Override

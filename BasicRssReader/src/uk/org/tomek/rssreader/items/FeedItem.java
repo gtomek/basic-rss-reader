@@ -1,17 +1,31 @@
 package uk.org.tomek.rssreader.items;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public final class FeedItem{
+public final class FeedItem implements Parcelable{
 	
-	private final String mTitle;
-	private final String mDescription;
-	private final String mTrackName;
-	private final String mTrackArtist;
-	private final String mTrackId;
-	private final String mLink;
-	private final String mGuid;
-	private final String mPubDate;
+	private String mTitle;
+	private String mDescription;
+	private String mTrackName;
+	private String mTrackArtist;
+	private String mTrackId;
+	private String mLink;
+	private String mGuid;
+	private String mPubDate;
 	
+	/**
+	 * Private constructor.
+	 * 
+	 * @param title
+	 * @param description
+	 * @param trackName
+	 * @param trackArtist
+	 * @param trackId
+	 * @param link
+	 * @param guid
+	 * @param pubDate
+	 */
 	private FeedItem(String title, String description, String trackName, String trackArtist,
 			String trackId, String link, String guid, String pubDate) {
 		mTitle = title;
@@ -22,6 +36,26 @@ public final class FeedItem{
 		mLink = link;
 		mGuid = guid;
 		mPubDate = pubDate;
+	}
+	
+	/**
+	 * Parcelable constructor.
+	 * 
+	 * @param in
+	 */
+	private FeedItem(Parcel in) {
+		String[] inData = new String[8];
+
+        in.readStringArray(inData);
+        mTitle = inData[0];
+        mDescription = inData[1];
+        mTrackName = inData[2];
+        mTrackArtist = inData[3];
+        mTrackId = inData[4];
+        mLink = inData[5];
+        mGuid = inData[6];
+        mPubDate = inData[7];
+        
 	}
 
 	public String getTitle() {
@@ -124,6 +158,31 @@ public final class FeedItem{
 			return new FeedItem(mTitle, mDescription, mTrackName, mTrackArtist, mTrackId,
 					mLink, mGuid, mPubDate);
 		}
+	}
+
+	/**
+	 * Parcelable creator.
+	 */
+	public static final Parcelable.Creator<FeedItem> CREATOR = new Parcelable.Creator<FeedItem>() {
+		public FeedItem createFromParcel(Parcel in) {
+			return new FeedItem(in);
+		}
+
+		public FeedItem[] newArray(int size) {
+			return new FeedItem[size];
+		}
+	};
+	
+	
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeStringArray(new String[] { getTitle(), getDescription(), getTrackName(),
+				getTrackArtist(), getTrackId(), getLink(), getGuid(), getPubDate() });
 	}
 
 }
