@@ -26,6 +26,8 @@
         </activity>
         <activity android:name="uk.org.tomek.rssreader.activity.FeedActivity" >
         </activity>
+        <activity android:name="uk.org.tomek.rssreader.activity.FeedWebActivity">
+        </activity>
     </application>
 
 </manifest>

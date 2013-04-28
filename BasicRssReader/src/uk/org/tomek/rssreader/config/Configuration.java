@@ -7,5 +7,6 @@ public class Configuration {
 	// for the moment the URL of the feed is fixed
 	public static final String RSS_FEED_URL = 
 			"http://www.shazam.com/music/web/taglistrss?mode=xml&userName=shazam";
+	public static final String LINK_TAG = "link_tag";
 
 }

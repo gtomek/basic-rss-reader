@@ -9,9 +9,14 @@ import uk.org.tomek.rssreader.R;
 import uk.org.tomek.rssreader.config.Configuration;
 import uk.org.tomek.rssreader.items.FeedItem;
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.Menu;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -33,7 +38,7 @@ public class FeedActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.feed_list);
 
-		List<FeedItem> feedsList = getIntent().getParcelableArrayListExtra(Configuration.TAG_ITEMS_ARRAY);
+		final List<FeedItem> feedsList = getIntent().getParcelableArrayListExtra(Configuration.TAG_ITEMS_ARRAY);
 
 		// create ArrayList of Maps for SimpleAdapter 
 		List<Map<String, String>> rssItemsList = getArrayListOfItemMaps(feedsList);
@@ -49,6 +54,20 @@ public class FeedActivity extends Activity {
 		
 		// Set list adapter for the ListView
 		itemsListView.setAdapter(adapter);
+		
+		// set clicks listener
+		itemsListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View view, int pos, long id) {
+//				Intent intent = new Intent(Intent.ACTION_VIEW);
+//				intent.setData(Uri.parse(feedsList.get(pos).getLink()));
+			
+				Intent intent = new Intent(FeedActivity.this, FeedWebActivity.class);
+				intent.putExtra(Configuration.LINK_TAG, feedsList.get(pos).getLink());
+				startActivity(intent);
+			}
+		});
 	}
 
 	/**
