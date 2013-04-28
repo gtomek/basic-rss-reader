@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.List;
+import java.util.ArrayList;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -37,7 +37,7 @@ public final class RssReaderImpl implements RssReader {
 	}
 
 	@Override
-	public List<FeedItem> getFeeds() {
+	public ArrayList<FeedItem> getFeeds() {
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		SAXParser saxParser;
 		RssParser parserHandler = RssParser.newInstance();

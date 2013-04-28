@@ -1,18 +1,16 @@
 package uk.org.tomek.rssreader.reader;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import uk.org.tomek.rssreader.items.FeedItem;
-import uk.org.tomek.rssreader.items.FeedItem;
 
 public final class RssParser extends DefaultHandler {
 
-	private List<FeedItem> mItemsList;
+	private ArrayList<FeedItem> mItemsList;
 	private FeedItem.Builder mCurrentItemBuilder;
 	private StringBuilder mStringBuilderTemp;
 	private boolean mIsInItemTag = false;
@@ -26,7 +24,7 @@ public final class RssParser extends DefaultHandler {
 		return new RssParser();
 	}
 
-	public List<FeedItem> getItems() {
+	public ArrayList<FeedItem> getItems() {
 		return mItemsList;
 	}
 	

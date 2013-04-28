@@ -1,6 +1,6 @@
 package uk.org.tomek.rssreader.activity;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import uk.org.tomek.rssreader.R;
 import uk.org.tomek.rssreader.items.FeedItem;
@@ -68,17 +68,17 @@ public class MainActivity extends Activity {
 	 * 
 	 * @author Tomasz Giszczak <tgiszczak@gmail.com>
 	 */
-	private class DownloadFeedsTask extends AsyncTask<String, Boolean, List<FeedItem>> {
+	private class DownloadFeedsTask extends AsyncTask<String, Boolean, ArrayList<FeedItem>> {
 
 		private String TAG = "DownloadFeedsTask";
 
 		@Override
-		protected List<FeedItem> doInBackground(String... url) {
+		protected ArrayList<FeedItem> doInBackground(String... url) {
 
 			// Initialise RssReader
 			RssReader rssReader = RssReaderImpl.newInstance(url[0]);
 			Log.d(TAG , "Launching read feeds");
-			List<FeedItem> resultList = rssReader.getFeeds();
+			ArrayList<FeedItem> resultList = rssReader.getFeeds();
 			if (resultList != null && !resultList.isEmpty()){
 				publishProgress(true);
 				return resultList;
@@ -103,7 +103,7 @@ public class MainActivity extends Activity {
 		}
 		
 		@Override
-		protected void onPostExecute(List<FeedItem> result) {
+		protected void onPostExecute(ArrayList<FeedItem> result) {
 			// Display the content..
 			Intent feedPresentation = new Intent(MainActivity.this, FeedActivity.class);
 //			feedPresentation.putExtra(TAG_ITEMS_ARRAY, result);

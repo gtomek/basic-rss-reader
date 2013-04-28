@@ -1,6 +1,6 @@
 package uk.org.tomek.rssreader.reader;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import uk.org.tomek.rssreader.items.FeedItem;
 
@@ -11,5 +11,5 @@ public interface RssReader {
 	 * 
 	 * @return list of received RSS feeds.
 	 */
-	public List<FeedItem> getFeeds();
+	public ArrayList<FeedItem> getFeeds();
 }
