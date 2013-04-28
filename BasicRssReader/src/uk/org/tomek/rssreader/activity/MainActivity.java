@@ -58,6 +58,7 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				mProgressBar.setVisibility(View.VISIBLE);
 				new DownloadFeedsTask().execute(Configuration.RSS_FEED_URL);
 			}
 			
@@ -102,9 +103,9 @@ public class MainActivity extends Activity {
 		
 		@Override
 		protected void onProgressUpdate(Boolean... values) {
+			mProgressBar.setVisibility(View.INVISIBLE);
 			if (values[0]) {
 				Log.d(TAG , "Fetching and parsing feeds finished successfully.");
-				mProgressBar.setVisibility(View.INVISIBLE);
 				mProgressBarDescription.setText(R.string.fetch_success);
 			} else {
 				Log.e(TAG , "Fetching and parsing feeds has failed.");
@@ -115,10 +116,13 @@ public class MainActivity extends Activity {
 		
 		@Override
 		protected void onPostExecute(ArrayList<FeedItem> result) {
-			// Display the content..
-			Intent feedPresentation = new Intent(MainActivity.this, FeedActivity.class);
-			feedPresentation.putParcelableArrayListExtra(Configuration.TAG_ITEMS_ARRAY, result);
-			startActivity(feedPresentation);
+			
+			if (result != null && !result.isEmpty()) {
+				// Display the content..
+				Intent feedPresentation = new Intent(MainActivity.this, FeedActivity.class);
+				feedPresentation.putParcelableArrayListExtra(Configuration.TAG_ITEMS_ARRAY, result);
+				startActivity(feedPresentation);
+			}
 		}
 	}
 
